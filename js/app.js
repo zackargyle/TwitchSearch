@@ -85,6 +85,7 @@ Twitch.updateList = (function() {
 */
 Twitch.search = (function() {
 	var url   = 'https://api.twitch.tv/kraken/search/streams?limit=5&callback=twitchCallback&q=',
+			list  = document.getElementById('twitch-list'),
 			searchBar  = document.getElementById('twitch-input');
 
 	return function(e) {
