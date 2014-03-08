@@ -37,7 +37,7 @@ Twitch.updateList = (function() {
   function updatePageAvailability() {
   	var page = Twitch.pageCount > 0 ? Twitch.data_offset + 1 : 0;
   	pageIndex.innerHTML = '&nbsp ? &nbsp'.replace('?', page + '/' + Twitch.pageCount);
-		if ((Twitch.data_offset) > Twitch.pageCount) {
+		if (Twitch.data_offset >= Twitch.pageCount - 1) {
 			pageNext.className = 'disabled';
 			pageNext.onclick   = null;
 		} else {
@@ -143,3 +143,17 @@ window.twitchCallback = (function() {
 		}
 	};
 }());
+
+// Initialize search
+(function() {
+  var val = document.getElementById('twitch-input');
+  if (val) Twitch.search();
+}());
+
+window.onresize = (function() {
+	var elem = document.getElementById('twitch');
+  return function() {
+  	elem.style.marginLeft = (window.innerWidth - elem.offsetWidth) / 2 + 'px';
+  }
+}());
+window.onresize();
