@@ -86,24 +86,21 @@ Twitch.updateList = (function() {
 Twitch.search = (function() {
 	var url   = 'https://api.twitch.tv/kraken/search/streams?limit=5&callback=twitchCallback&q=',
 			list  = document.getElementById('twitch-list'),
-			searchBar  = document.getElementById('twitch-input');
+			searchBar  = document.getElementById('twitch-input'),
+			prevVal = '';
 
 	return function(e) {
 		clearTimeout(this.debounce);
 
 		// Submitted from keydown (not pagination)
-		if (e) {
-			// Ignore unnecessary keystrokes
-			if ((e.keyCode < 48 || (e.keyCode > 90 && e.keyCode < 187)) &&
-				  [8, 13, 46, 188, 189,187].indexOf(e.keyCode) === -1) 
-				return;
-			this.data_offset = 0;
-		}
+		if (e) this.data_offset = 0;
 
 		var val = searchBar.value;
 
 		// Twitch only responds with data for searches of length > 2
-		if (val.length > 2) {
+		if (val.length > 2 && val.trim() !== prevVal.trim()) {
+			prevVal = val;
+
 			var request_url = url + val + '&offset=' + Twitch.data_offset * 5;
 
 			// Pagination requires no debounce
