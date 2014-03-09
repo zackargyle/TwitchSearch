@@ -6,20 +6,56 @@
 var Twitch = {
 	requestCount: 0,
 	pageCount: 0,
-	data_set: [],
+	data_set: null,
+	data_set_next: null,
+	data_set_prev: null,
 	data_offset: 0,
 	debounce: null
 };
 
+// Display next page of data
 Twitch.nextPage = function() {
 	this.data_offset++;
-	this.search();
+	this.data_set_prev = this.data_set;
+	this.data_set = this.data_set_next;
+
+	this.updateList();
+	this.queue.next();
 }
 
+// Display previous page of data
 Twitch.prevPage = function() {
 	this.data_offset--;
-	this.search();
+	this.data_set_next = this.data_set;
+	this.data_set = this.data_set_prev;
+
+	this.updateList();
+	this.queue.prev();
 }
+
+/*
+	For efficiency, queue up prev/next page of data
+*/
+Twitch.queue = (function() {
+	var next_url   = 'https://api.twitch.tv/kraken/search/streams?limit=5&callback=queueNext&q=',
+			prev_url   = 'https://api.twitch.tv/kraken/search/streams?limit=5&callback=queuePrev&q=',
+ 			searchBar  = document.getElementById('twitch-input');
+
+	return {
+		next: function() {
+			var val = searchBar.value,
+					offset = Twitch.data_offset * 5 + 5,
+					request_url = next_url + val + '&offset=' + offset;
+			Twitch.get(request_url);
+		},
+		prev: function() {
+			var val = searchBar.value,
+					offset = Twitch.data_offset * 5 - 5,
+					request_url = prev_url + val + '&offset=' + offset;
+			Twitch.get(request_url);
+		}
+	}
+}());
 
 /*
 	Method for updating current list of displayed streams
@@ -31,7 +67,8 @@ Twitch.updateList = (function() {
 	var list  = document.getElementById('twitch-list'),
 			pageIndex = document.getElementById('page-index'),
 			pagePrev  = document.getElementById('page-prev'),
-			pageNext  = document.getElementById('page-next');
+			pageNext  = document.getElementById('page-next'),
+			streamTotal = document.getElementById('streamTotal');
 
 	// Helper function to update pagination arrows
   function updatePageAvailability() {
@@ -43,6 +80,7 @@ Twitch.updateList = (function() {
 		} else {
 			pageNext.className = '';
 			pageNext.onclick   = function() {Twitch.nextPage()};
+			pageNext.touchend  = function() {Twitch.nextPage()};
 		}
 
 		if (Twitch.data_offset === 0) {
@@ -51,6 +89,7 @@ Twitch.updateList = (function() {
 		} else {
 			pagePrev.className = '';
 			pagePrev.onclick   = function() {Twitch.prevPage()};
+			pagePrev.touchend  = function() {Twitch.prevPage()};
 		}
 	}
 
@@ -66,8 +105,11 @@ Twitch.updateList = (function() {
 	}
 
 	return function() {
+		this.pageCount = Math.ceil(this.data_set._total / 5);
+		streamTotal.innerHTML = this.data_set._total;
+
 		var html = '';
-		Twitch.data_set.forEach(function(stream) {
+		this.data_set.streams.forEach(function(stream) {
 			html += createStreamString(stream);
 		});
 		updatePageAvailability();
@@ -81,41 +123,33 @@ Twitch.updateList = (function() {
 	Method for searching for twitch streams matching input query.
 	 - Should be debounced for efficiency
 	 - Should limit results to 5
-	 - Should return results based of offset
 */
 Twitch.search = (function() {
-	var url   = 'https://api.twitch.tv/kraken/search/streams?limit=5&callback=twitchCallback&q=',
+	var url   = 'https://api.twitch.tv/kraken/search/streams?limit=5&callback=search&q=',
 			list  = document.getElementById('twitch-list'),
 			searchBar  = document.getElementById('twitch-input'),
 			prevVal = '';
 
-	return function(e) {
+	return function() {
 		clearTimeout(this.debounce);
-
-		// Submitted from keydown (not pagination)
-		if (e) this.data_offset = 0;
-
 		var val = searchBar.value;
 
-		// Twitch only responds with data for searches of length > 2
-		if (val.length > 2 && val.trim() !== prevVal.trim()) {
-			prevVal = val;
+		// Submitted from keydown (not pagination)
+		this.data_offset = 0;
 
+		// Twitch only responds with data for searches of length > 2
+		if (val.length > 2) {
 			var request_url = url + val + '&offset=' + Twitch.data_offset * 5;
 
-			// Pagination requires no debounce
-			if (!e) {
+			this.debounce = setTimeout(function() {
 				Twitch.get(request_url);
-			} else {
-				// Only send request after idle typing
-				this.debounce = setTimeout(function() {
-					Twitch.get(request_url);
-				}, 300);
-			}
+			}, 200);
+
 		}
 	};
 }());
 
+// Base cross domain request
 Twitch.get = function(url) {
 	var script = document.createElement('script');
 	script.src = url;
@@ -127,20 +161,25 @@ Twitch.get = function(url) {
 		- Should check for correct data
 		- Should only update view if no other requests are out
 */
-window.twitchCallback = (function() {
-	var streamTotal = document.getElementById('streamTotal');
-	return function(response) {
-		Twitch.requestCount--;
+window.search = function(response) {
+	Twitch.requestCount--;
+	// Only change view if another request has not been sent
+	if (response.streams && Twitch.requestCount === 0) {
+		Twitch.data_set = response;
+		Twitch.updateList();
+		Twitch.queue.next();
+	}
+};
 
-		// Only change view if another request has not been sent
-		if (response.streams && Twitch.requestCount === 0) {
-			Twitch.pageCount = Math.ceil(response._total / 5);
-			Twitch.data_set = response.streams;
-			Twitch.updateList();
-			streamTotal.innerHTML = response._total;
-		}
-	};
-}());
+window.queueNext = function(response) {
+	if (response && response.streams)
+		Twitch.data_set_next = response;
+};
+
+window.queuePrev = function(response) {
+	if (response && response.streams)
+		Twitch.data_set_prev = response;
+};
 
 // Initialize search
 (function() {
