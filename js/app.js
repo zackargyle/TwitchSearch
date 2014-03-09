@@ -110,7 +110,7 @@ Twitch.search = (function() {
 				// Only send request after idle typing
 				this.debounce = setTimeout(function() {
 					Twitch.get(request_url);
-				}, 300);
+				}, 200);
 			}
 		}
 	};
