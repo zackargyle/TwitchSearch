@@ -24,18 +24,18 @@ body {
 
 #twitch-input {
 	float: left;
-	padding: .6%;
+	padding: 5px;
 	width: 25%;
 	border-radius: 0;
 }
 
 #twitch-submit {
 	float: left;
-	width: 7.3%;
+	width: 7.5%;
 	font-size: .8rem;
 	margin-left: 5px;
 	color: white;
-	padding: 1.2%;
+	padding: 9px;
 	background-color: hsl(217, 100%, 0%);
 	border: none;
 	box-sizing:border-box;
@@ -60,7 +60,7 @@ body {
 }
 
 #twitch-body-header {
-	padding: 0% 0 3%;
+	padding: 0% 0 4%;
 }
 
 #twitch-list {
