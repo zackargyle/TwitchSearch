@@ -43,6 +43,7 @@ Twitch.updateList = (function() {
 		} else {
 			pageNext.className = '';
 			pageNext.onclick   = function() {Twitch.nextPage()};
+			pageNext.touchend  = function() {Twitch.nextPage()};
 		}
 
 		if (Twitch.data_offset === 0) {
@@ -51,6 +52,7 @@ Twitch.updateList = (function() {
 		} else {
 			pagePrev.className = '';
 			pagePrev.onclick   = function() {Twitch.prevPage()};
+			pagePrev.touchend  = function() {Twitch.prevPage()};
 		}
 	}
 
@@ -91,16 +93,13 @@ Twitch.search = (function() {
 
 	return function(e) {
 		clearTimeout(this.debounce);
+		var val = searchBar.value;
 
 		// Submitted from keydown (not pagination)
 		if (e) this.data_offset = 0;
 
-		var val = searchBar.value;
-
 		// Twitch only responds with data for searches of length > 2
-		if (val.length > 2 && val.trim() !== prevVal.trim()) {
-			prevVal = val;
-
+		if (val.length > 2) {
 			var request_url = url + val + '&offset=' + Twitch.data_offset * 5;
 
 			// Pagination requires no debounce
