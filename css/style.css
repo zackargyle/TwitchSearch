@@ -25,13 +25,15 @@ body {
 #twitch-input {
 	float: left;
 	padding: 5px;
+	height: 30px;
 	width: 25%;
 	border-radius: 0;
 }
 
 #twitch-submit {
 	float: left;
-	width: 7.5%;
+	width: 8%;
+	height: 30px;
 	font-size: .8rem;
 	margin-left: 5px;
 	color: white;
