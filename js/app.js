@@ -77,6 +77,7 @@ Twitch.updateList = (function() {
 		if (Twitch.data_offset >= Twitch.pageCount - 1) {
 			pageNext.className = 'disabled';
 			pageNext.onclick   = null;
+			pageNext.touchend  = null;
 		} else {
 			pageNext.className = '';
 			pageNext.onclick   = function() {Twitch.nextPage()};
@@ -86,6 +87,7 @@ Twitch.updateList = (function() {
 		if (Twitch.data_offset === 0) {
 			pagePrev.className = 'disabled';
 			pagePrev.onclick   = null;
+			pagePrev.touchend  = null;
 		} else {
 			pagePrev.className = '';
 			pagePrev.onclick   = function() {Twitch.prevPage()};
