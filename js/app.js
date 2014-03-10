@@ -37,7 +37,7 @@ Twitch.prevPage = function() {
   For efficiency, queue up prev/next page of data
 */
 Twitch.queue = (function() {
-  var next_url   = 'https://api.twitch.tv/kraken/search/streams?limit=5&callback=queueNext&q=',
+	var next_url   = 'https://api.twitch.tv/kraken/search/streams?limit=5&callback=queueNext&q=',
 	    prev_url   = 'https://api.twitch.tv/kraken/search/streams?limit=5&callback=queuePrev&q=',
 	    searchBar  = document.getElementById('twitch-input');
 
