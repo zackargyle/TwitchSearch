@@ -56,13 +56,13 @@ body {
 
 #twitch-body {
 	width: 94%;
-	padding: 3%;
+	padding: 0 3%;
 	background-color: hsl(217, 100%, 9%);
 	color: white;
 }
 
 #twitch-body-header {
-	padding: 0% 0 2%;
+	padding: 1%;
 }
 
 #twitch-list {
@@ -85,7 +85,7 @@ body {
 
 .stream-image {
 	width:100%;
-	height: 200px;
+	height: 150px;
 	padding-right: 10px;
 	display:inline-block;
 }
