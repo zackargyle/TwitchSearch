@@ -7,6 +7,7 @@
 
 body {
 	background-color: hsl(215, 90%, 5%);
+	min-width: 500px;
 }
 
 #twitch {
@@ -105,6 +106,69 @@ body {
 
 .stream-name:hover {
 	color: hsl(217, 100%, 25%);
+}
+
+@media (max-width: 1000px) { 
+
+	#twitch {
+		width: 100%;
+		margin-top: 0px;
+		border: 1px solid hsl(0,0%,12%);
+	}
+	
+	#twitch-search {
+		padding-top: 20px;
+	}
+
+	#twitch-input {
+		padding: 10px;
+		height: 50px;
+		width: 40%;
+		font-size: 20px;
+	}
+
+	#twitch-submit {
+		width: 20%;
+		height: 50px;
+		font-size: 20px;
+		padding: 13px;
+	}
+	
+	#twitch-result-count, #streamTotal {
+		font-size: 20px;
+	}
+
+}
+
+@media (max-width: 700px) { 
+	#twitch-search {
+		height: 2.5%;
+		padding-left: 18%;
+	}
+	.twitch-stream {
+		width: 70%;
+		margin-left: 14%;
+	}
+
+	.stream-image {
+		width:100%;
+		height: 35%;;
+	}
+
+	.stream-name {
+		color: white;
+		text-decoration: none;
+		font-size: 30px;
+	}
+	
+	#twitch-result-count {
+		padding: 0% 15%;
+	}
+
+	* {
+		font-size: 20px;
+	}
+
 }
 
 /*      *** ANIMATIONS ***      */
