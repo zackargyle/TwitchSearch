@@ -6,7 +6,7 @@
 	    list   = document.getElementById('twitch-list'),
 	    input = document.getElementById('twitch-input'),
 	    total = document.getElementById('streamTotal'),
-	    offset = 0, debounce = null, height = 0, prevValue;
+	    offset = 0, debounce = null, height = 0, prevValue = '';
 
 	var twitch   = new HTMLArray("stream-node")
 	
@@ -54,6 +54,8 @@
 			}, 200);
 		}
 	}
+
+	search();
 	
 }());
 
