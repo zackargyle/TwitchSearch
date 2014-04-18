@@ -10,7 +10,7 @@ body {
 }
 
 #twitch {
-	width: 700px;
+	width: 900px;
 	margin-top: 20px;
 	border: 1px solid hsl(0,0%,12%);
 }
@@ -70,38 +70,33 @@ body {
 }
 
 .twitch-stream {
-	width: 96%;
+	width: 29%%;
 	padding: 1%;
 	clear: both;
 	padding: 2%;
-	border-bottom: 1px solid hsl(0, 0%, 15%);
-	-webkit-animation: fadein .7s; /* Safari and Chrome */
-     -moz-animation: fadein .7s; /* Firefox */
-      -ms-animation: fadein .7s; /* Internet Explorer */
-       -o-animation: fadein .7s; /* Opera */
-          animation: fadein .7s;
-}
-
-.twitch-stream:last-child {
-	border: none;
+	text-align: center;
+	display: inline-block;
+	-webkit-animation: fadein 1s; /* Safari and Chrome */
+     -moz-animation: fadein 1s; /* Firefox */
+      -ms-animation: fadein 1s; /* Internet Explorer */
+       -o-animation: fadein 1s; /* Opera */
+          animation: fadein 1s;
 }
 
 .stream-image {
-	width:100px;
-	height: 100px;
+	width:100%;
+	height: 200px;
 	padding-right: 10px;
-	
+	display:inline-block;
 }
 
 .stream-info {
-	display: inline-block;
-	width: 80%;
 	color: hsl(0,0%,70%);
 	vertical-align: top;
 }
 
 .stream-info div {
-	font-size: 14px;
+	font-size: 10px;
 }
 
 .stream-name {
