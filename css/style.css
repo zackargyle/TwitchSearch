@@ -1,5 +1,5 @@
 * {
-	font-size: 13px;
+	font-size: 10px;
 	font-family: "Lucida Grande";
 	margin: 0;
 	padding: 0;
@@ -28,25 +28,27 @@ body {
 	height: 30px;
 	width: 25%;
 	border-radius: 0;
+	font-size: 13px;
 }
 
 #twitch-submit {
 	float: left;
 	width: 8%;
 	height: 30px;
-	font-size: .8rem;
+	font-size: 10px;
 	margin-left: 5px;
 	color: white;
 	padding: 9px;
 	background-color: hsl(217, 100%, 0%);
 	border: none;
+	text-align: center;
 	box-sizing:border-box;
 	-moz-box-sizing:border-box;
 	-webkit-box-sizing:border-box;
 	box-shadow: inset 1px 0px 0px 0px hsl(0, 0%, 85%),
-  				inset -1px 1px 0px 0px hsl(0, 0%, 85%),
-  				inset 0px 1px 0px 0px hsl(0, 0%, 85%),
-  				inset 0px -1px 0px 0px hsl(0, 0%, 85%);
+  						inset -1px 1px 0px 0px hsl(0, 0%, 85%),
+  						inset 0px 1px 0px 0px hsl(0, 0%, 85%),
+  						inset 0px -1px 0px 0px hsl(0, 0%, 85%);
 }
 
 #twitch-submit:hover {
@@ -93,10 +95,6 @@ body {
 .stream-info {
 	color: hsl(0,0%,70%);
 	vertical-align: top;
-}
-
-.stream-info div {
-	font-size: 10px;
 }
 
 .stream-name {
