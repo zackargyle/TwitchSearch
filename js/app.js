@@ -4,16 +4,17 @@
 (function() {
 	var	url    = 'https://api.twitch.tv/kraken/search/streams?limit=15&callback=',
 	    list   = document.getElementById('twitch-list'),
-	    input = document.getElementById('twitch-input'),
-	    total = document.getElementById('streamTotal'),
-	    offset = 0, debounce = null, height = 0, prevValue = '';
-
-	var twitch   = new HTMLArray("stream-node")
+	    input  = document.getElementById('twitch-input'),
+	    submit = document.getElementById('twitch-submit'),
+	    total  = document.getElementById('streamTotal'),
+	    offset = 0, debounce = null, height = 0, prevValue = '',
+			twitch = new HTMLArray("stream-node")
 	
-	document.getElementById('twitch-input').onkeyup = search;
-	document.getElementById('twitch-submit').onclick = search;
-	document.getElementById('twitch-submit').touchend = search;
-	window.onscroll = scroll;
+	input.addEventListener("keyup", search);
+	submit.addEventListener("click", search);
+	submit.addEventListener("touchend", search);
+	window.addEventListener("scroll", scroll);
+	search();
 
 	window.response = function(response) {
 		if (response.streams) {
@@ -30,8 +31,8 @@
 		if (window.scrollY === document.documentElement.clientHeight - window.innerHeight) {
 			if (window.scrollY !== height) {
 				height = window.scrollY;
-				var value = input.value.trim();
 				offset += 15;
+				var value = input.value.trim();
 				get(url + 'response&q=' + value + '&offset=' + offset);
 			}
 		}
@@ -51,12 +52,9 @@
 			debounce = setTimeout(function() {
 				offset = 0;
 				get(url + 'response&q=' + value + '&offset=' + offset);
-			}, 200);
+			}, 250);
 		}
-	}
-
-	search();
-	
+	}	
 }());
 
 window.onresize = (function() {
