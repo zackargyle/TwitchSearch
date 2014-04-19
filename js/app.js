@@ -7,7 +7,7 @@
 	    input  = document.getElementById('twitch-input'),
 	    submit = document.getElementById('twitch-submit'),
 	    total  = document.getElementById('streamTotal'),
-	    offset = 0, debounce = null, height = 0, prevValue = '',
+	    offset = 0, debounce = null, valid = true, prevValue = '',
 			twitch = new HTMLArray("stream-node")
 	
 	input.addEventListener("keyup", search);
@@ -29,8 +29,9 @@
 
 	function scroll() {
 		if (window.scrollY === document.documentElement.clientHeight - window.innerHeight) {
-			if (window.scrollY !== height) {
-				height = window.scrollY;
+			if (valid === true) {
+				window.setTimeout(function() { valid = true; }, 1000);
+				valid = false;
 				offset += 15;
 				var value = input.value.trim();
 				get(url + 'response&q=' + value + '&offset=' + offset);
@@ -60,7 +61,7 @@
 window.onresize = (function() {
 	var elem = document.getElementById('twitch');
 	return function() {
-		if (window.innerWidth > 700)
+		if (window.innerWidth > 800)
 			elem.style.marginLeft = (window.innerWidth - elem.offsetWidth) / 2 + 'px';
 	}
 }());
