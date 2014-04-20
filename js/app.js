@@ -28,7 +28,8 @@
 	};
 
 	function scroll() {
-		if ((window.scrollY || window.pageYOffset) === document.documentElement.clientHeight - window.innerHeight) {
+		var d = document.documentElement.clientHeight ? document.documentElement : document.body;
+		if ((window.scrollY || d.scrollTop) === d.clientHeight - window.innerHeight) {
 			if (valid === true) {
 				window.setTimeout(function() { valid = true; }, 1000);
 				valid = false;
