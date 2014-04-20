@@ -125,7 +125,7 @@ function HTMLArray (id, data) {
 		// }
 		alert("set");
 		removeAll();
-		alert("all removed");
+		alert(updatedData[0]);
 		for (var i = 0; i < updatedData.length; i++) {
 			insertNode(updatedData[i], i);
 		}
