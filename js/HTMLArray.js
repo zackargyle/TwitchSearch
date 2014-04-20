@@ -123,12 +123,13 @@ function HTMLArray (id, data) {
 		// if (!isArray(updatedData)) {
 		// 	throw "HTMLArray.set requires an array";
 		// }
-
+		alert("set");
 		removeAll();
-
+		alert("all removed");
 		for (var i = 0; i < updatedData.length; i++) {
-			insertNode(updatedData[i]);
+			insertNode(updatedData[i], i);
 		}
+		alert("all inserted");
 		refresh();
 		return this_;
 	}
