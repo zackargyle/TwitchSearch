@@ -28,7 +28,7 @@
 	};
 
 	function scroll() {
-		if (window.scrollY === document.documentElement.clientHeight - window.innerHeight) {
+		if ((window.scrollY || window.pageYOffset) === document.documentElement.clientHeight - window.innerHeight) {
 			if (valid === true) {
 				window.setTimeout(function() { valid = true; }, 1000);
 				valid = false;
