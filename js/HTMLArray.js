@@ -96,9 +96,8 @@ function HTMLArray (id, data) {
 		var clone = element.cloneNode(true);
 		clone.removeAttribute("id");
 		setupChild(clone, obj);
-		alert(nodes[index]);
+		
 		parent.insertBefore(clone, nodes[index] || null);
-		alert(parent.children.length);
 		nodes.splice(index, 0, clone);
 		data.splice(index, 0, obj);
 	}
