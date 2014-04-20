@@ -120,9 +120,9 @@ function HTMLArray (id, data) {
 	}
 
 	this.set = function(updatedData) {
-		if (!isArray(updatedData)) {
-			throw "HTMLArray.set requires an array";
-		}
+		// if (!isArray(updatedData)) {
+		// 	throw "HTMLArray.set requires an array";
+		// }
 
 		removeAll();
 
@@ -158,9 +158,9 @@ function HTMLArray (id, data) {
 	}
 
 	this.concat = function(array) {
-		if (!isArray(array)) {
-			throw "HTMLArray.concat requires an array";
-		}
+		// if (!isArray(array)) {
+		// 	throw "HTMLArray.concat requires an array";
+		// }
 
 		for (var i = 0; i < array.length; i++) {
 			insertNode(array[i]);
